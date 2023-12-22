@@ -1,6 +1,6 @@
 package com.example.mytodoapp.domain.todolist.dto
 
-data class TodoListResponse(
+data class TodoResponse(
         val id: Long,
         val todoTitle: String,
         val todoDescription: String,
