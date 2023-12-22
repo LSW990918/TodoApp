@@ -1,6 +1,6 @@
-package com.example.mytodoapp.domain.todolist.dto
+package com.example.mytodoapp.domain.todo.dto
 
-data class UpdateTodoListRequest(
+data class UpdateTodoRequest(
         val todoTitle: String,
         val todoDescription: String,
 )

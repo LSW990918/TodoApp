@@ -1,11 +1,11 @@
 package com.example.mytodoapp.domain.todocard.dto
 
-import com.example.mytodoapp.domain.todolist.dto.TodoListResponse
+import com.example.mytodoapp.domain.todo.dto.TodoResponse
 
 
 data class TodoCardResponse(
         val id: Long,
         val user: String,
-        val todoList: TodoListResponse?,
+        val todoList: TodoResponse?,
         val date: String,
 )

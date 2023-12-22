@@ -16,7 +16,7 @@ class TodoCardController {
         TODO()
     }
 
-    @GetMapping
+    @GetMapping()
     fun getTodoCardList(): ResponseEntity<List<TodoCardResponse>>{
         TODO()
     }
@@ -27,7 +27,7 @@ class TodoCardController {
     }
 
     @PutMapping("/{todoCardId}")
-    fun updateCourse(
+    fun updateTodoCard(
             @PathVariable todoCardId: Long,
             @RequestBody updateTodoCardRequest: UpdateTodoCardRequest
     ): ResponseEntity<TodoCardResponse> {

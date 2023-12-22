@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/todoCards/{todoCardId}/todoList")
 @RestController
-class TodoListController {
+class TodoController {
 
     @PostMapping
     fun createTodo(@RequestBody createTodoCardRequest: AddTodoRequest)
