@@ -46,7 +46,7 @@ class TodoCardController(
                 .body(todoCardService.updateTodoCard(todoCardId, updateTodoCardRequest))
     }
 
-    @DeleteMapping("/{todoCardId}")
+    @DeleteMapping("/{todoCardId}/{password}")
     fun deleteTodoCard(
             @PathVariable todoCardId: Long,
             @PathVariable password: String,
