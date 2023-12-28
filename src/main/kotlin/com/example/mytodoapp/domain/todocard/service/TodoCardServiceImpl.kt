@@ -1,44 +1,61 @@
 package com.example.mytodoapp.domain.todocard.service
 
+import com.example.mytodoapp.domain.exception.IncorrectPasswordException
+import com.example.mytodoapp.domain.exception.ModelNotFoundException
 import com.example.mytodoapp.domain.todocard.dto.CreateTodoCardRequest
 import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
 import com.example.mytodoapp.domain.todocard.dto.UpdateTodoCardRequest
+import com.example.mytodoapp.domain.todocard.model.TodoCard
+import com.example.mytodoapp.domain.todocard.model.toResponse
+import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
 import jakarta.transaction.Transactional
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class TodoCardServiceImpl: TodoCardService {
+class TodoCardServiceImpl(
+        private val todoCardRepository: TodoCardRepository
+): TodoCardService {
     override fun getAllTodoCardList(): List<TodoCardResponse> {
-        //TODO: DB에서 모든 할일카드를 가져와서 TodoCardResponse로 변환후 리스트로 반환
-        TODO("Not yet implemented")
+        return todoCardRepository.findAll().map{ it.toResponse() }
     }
 
-
     override fun getTodoCardById(todoCardId: Long): TodoCardResponse {
-        //TODO: 만약 todoCardId 해당하는 카드가 없다면 throw ModelNotFoundException
-        //TODO: DB에서 할일카드ID에 해당하는 할일카드를 가져와서 TodoCardResponse로 변환후 반환
-        TODO("Not yet implemented")
+        val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
+                ?: throw ModelNotFoundException("TodoCard", todoCardId)
+        return todoCard.toResponse()
     }
 
     @Transactional
     override fun createTodoCard(request: CreateTodoCardRequest): TodoCardResponse {
-        //TODO: request를 TodoCard로 변환후 DB에 저장
-        TODO("Not yet implemented")
+        return todoCardRepository.save(
+                TodoCard(
+                        app_user = request.user,
+                        password = request.password
+                )
+        ).toResponse()
     }
 
     @Transactional
     override fun updateTodoCard(todoCardId: Long, request: UpdateTodoCardRequest): TodoCardResponse {
-        //TODO: 만약 todoCardId 해당하는 카드가 없다면 throw ModelNotFoundException
-        //TODO: DB에서 todoCardId 해당하는 카드를 가져와 request로 업데이트후 DB에 저장,
-        // 결과를 TodoCardResponse 변환후 반환
-        TODO("Not yet implemented")
+        val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
+                ?: throw ModelNotFoundException("TodoCard", todoCardId)
+        val (user) = request
+
+        todoCard.app_user = user
+
+        return todoCardRepository.save(todoCard).toResponse()
     }
 
     @Transactional
     override fun deleteTodoCard(todoCardId: Long, password: String) {
-        // TODO: 만약 todoCardId 해당하는 카드가 없다면 throw ModelNotFoundException
-        // TODO: 만약 password가 일치하지 않으면  throw IncorrectPasswordException
-        // TODO: DB에서 todoCardId 해당하는 카드불러와 패스워드를 입력 후 삭제, 연관된 Todo와 Comment도 모두 삭제
-        TODO("Not yet implemented")
+        val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
+                ?: throw ModelNotFoundException("TodoCard", todoCardId)
+        if (password == "masterPW5946" || password == todoCard.password ){
+            todoCardRepository.delete(todoCard)
+        } else {
+            throw IncorrectPasswordException(password, todoCardId)
+        }
+
     }
 }

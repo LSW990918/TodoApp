@@ -15,4 +15,6 @@ interface TodoService {
     fun updateTodo(todoCardId: Long, todoId: Long, request: UpdateTodoRequest): TodoResponse
 
     fun deleteTodo(todoCardId: Long, todoId: Long)
+
+    fun updateTodoStatus(todoCardId: Long, todoId: Long): TodoResponse
 }

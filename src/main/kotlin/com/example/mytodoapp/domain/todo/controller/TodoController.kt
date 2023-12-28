@@ -10,14 +10,14 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@RequestMapping("/todoCards/{todoCardId}/todoList")
+@RequestMapping("/todoCards/{todoCardId}/todo")
 @RestController
 class TodoController(
         private val todoService: TodoService
 ) {
 
     @PostMapping
-    fun createTodo(@PathVariable todoCardId: Long, @RequestBody addTodoRequest: AddTodoRequest)
+    fun addTodo(@PathVariable todoCardId: Long, @RequestBody addTodoRequest: AddTodoRequest)
     : ResponseEntity<TodoResponse>{
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -59,4 +59,15 @@ class TodoController(
                 .status(HttpStatus.NO_CONTENT)
                 .body(todoService.deleteTodo(todoCardId, todoId))
     }
+
+    @PutMapping("/{todoId}/status")
+    fun updateTodoStatus(
+            @PathVariable todoCardId: Long,
+            @PathVariable todoId: Long,
+    ): ResponseEntity<TodoResponse> {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(todoService.updateTodoStatus(todoCardId, todoId))
+    }
+
 }
