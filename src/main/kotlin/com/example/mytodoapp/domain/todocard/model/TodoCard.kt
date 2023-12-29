@@ -32,6 +32,7 @@ class TodoCard (
                 cascade = [CascadeType.ALL],
                 orphanRemoval=true,
                 fetch = FetchType.LAZY)
+        @JoinColumn(name = "todocard_id")
         var comments: MutableList<Comment> = mutableListOf()
 
 
