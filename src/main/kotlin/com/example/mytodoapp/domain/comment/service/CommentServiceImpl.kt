@@ -60,10 +60,13 @@ class CommentServiceImpl (
 
     @Transactional
     override fun deleteComment(todoCardId: Long, commentId: Long, password: String) {
+        val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
+                ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val comment = commentRepository.findByIdOrNull(commentId)
                 ?: throw ModelNotFoundException("Comment", commentId)
         if (password == "masterPW5946" || password == comment.password ){
-            commentRepository.delete(comment)
+            todoCard.removeComment(comment)
+            todoCardRepository.save(todoCard)
         } else {
             throw IncorrectPasswordException(password, commentId)
         }

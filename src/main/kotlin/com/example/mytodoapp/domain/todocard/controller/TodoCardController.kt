@@ -46,10 +46,10 @@ class TodoCardController(
                 .body(todoCardService.updateTodoCard(todoCardId, updateTodoCardRequest))
     }
 
-    @DeleteMapping("/{todoCardId}/{password}")
+    @DeleteMapping("/{todoCardId}")
     fun deleteTodoCard(
             @PathVariable todoCardId: Long,
-            @PathVariable password: String,
+            password: String,
             ): ResponseEntity<Unit>{
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
