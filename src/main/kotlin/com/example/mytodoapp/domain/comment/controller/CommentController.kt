@@ -57,7 +57,7 @@ class CommentController(
     fun deleteComment(
             @PathVariable todoCardId: Long,
             @PathVariable commentId: Long,
-            @PathVariable password: String, ): ResponseEntity<Unit>{
+            password: String, ): ResponseEntity<Unit>{
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(commentService.deleteComment(todoCardId, commentId, password))
