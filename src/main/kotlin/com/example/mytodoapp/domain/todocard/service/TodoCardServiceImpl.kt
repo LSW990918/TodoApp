@@ -51,7 +51,8 @@ class TodoCardServiceImpl(
     override fun deleteTodoCard(todoCardId: Long, password: String) {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
                 ?: throw ModelNotFoundException("TodoCard", todoCardId)
-        if (password == "masterPW5946" || password == todoCard.password ){
+        val masterPw = "1324"
+        if (password == masterPw || password == todoCard.password ){
             todoCardRepository.delete(todoCard)
         } else {
             throw IncorrectPasswordException(password, todoCardId)

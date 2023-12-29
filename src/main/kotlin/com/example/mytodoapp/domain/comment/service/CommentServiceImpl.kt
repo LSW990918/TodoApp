@@ -64,7 +64,8 @@ class CommentServiceImpl (
                 ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val comment = commentRepository.findByIdOrNull(commentId)
                 ?: throw ModelNotFoundException("Comment", commentId)
-        if (password == "masterPW5946" || password == comment.password ){
+        val masterPw = "1324"
+        if (password == masterPw || password == comment.password ){
             todoCard.removeComment(comment)
             todoCardRepository.save(todoCard)
         } else {
