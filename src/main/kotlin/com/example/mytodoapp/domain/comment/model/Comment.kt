@@ -6,30 +6,29 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "comment")
-class Comment (
+class Comment(
 
-        @Column(name = "app_user", nullable = false)
-        var app_user: String,
+    @Column(name = "app_user", nullable = false)
+    var appUser: String,
 
-        @Column(name = "text", nullable = false)
-        var text: String,
+    @Column(name = "text", nullable = false)
+    var text: String,
 
-        @Column(name = "password", nullable = false)
-        var password: String,
+    @Column(name = "password", nullable = false)
+    var password: String,
 
 
-
-) {
+    ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
 }
 
-fun Comment.toResponse() : CommentResponse {
+fun Comment.toResponse(): CommentResponse {
     return CommentResponse(
-            id = id!!,
-            user = app_user,
-            text = text
+        id = id!!,
+        user = appUser,
+        text = text
     )
 }

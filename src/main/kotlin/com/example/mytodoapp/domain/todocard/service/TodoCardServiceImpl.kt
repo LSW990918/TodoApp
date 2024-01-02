@@ -14,32 +14,32 @@ import org.springframework.stereotype.Service
 
 @Service
 class TodoCardServiceImpl(
-        private val todoCardRepository: TodoCardRepository
-): TodoCardService {
+    private val todoCardRepository: TodoCardRepository
+) : TodoCardService {
     override fun getAllTodoCardList(): List<TodoCardResponse> {
-        return todoCardRepository.findAll().map{ it.toResponse() }
+        return todoCardRepository.findAll().map { it.toResponse() }
     }
 
     override fun getTodoCardById(todoCardId: Long): TodoCardResponse {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
-                ?: throw ModelNotFoundException("TodoCard", todoCardId)
+            ?: throw ModelNotFoundException("TodoCard", todoCardId)
         return todoCard.toResponse()
     }
 
     @Transactional
     override fun createTodoCard(request: CreateTodoCardRequest): TodoCardResponse {
         return todoCardRepository.save(
-                TodoCard(
-                        app_user = request.user,
-                        password = request.password
-                )
+            TodoCard(
+                app_user = request.user,
+                password = request.password
+            )
         ).toResponse()
     }
 
     @Transactional
     override fun updateTodoCard(todoCardId: Long, request: UpdateTodoCardRequest): TodoCardResponse {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
-                ?: throw ModelNotFoundException("TodoCard", todoCardId)
+            ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val (user) = request
 
         todoCard.app_user = user
@@ -50,9 +50,9 @@ class TodoCardServiceImpl(
     @Transactional
     override fun deleteTodoCard(todoCardId: Long, password: String) {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
-                ?: throw ModelNotFoundException("TodoCard", todoCardId)
+            ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val masterPw = "1324"
-        if (password == masterPw || password == todoCard.password ){
+        if (password == masterPw || password == todoCard.password) {
             todoCardRepository.delete(todoCard)
         } else {
             throw IncorrectPasswordException(password, todoCardId)

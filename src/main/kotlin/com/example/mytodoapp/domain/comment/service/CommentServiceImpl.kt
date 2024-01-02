@@ -24,7 +24,7 @@ class CommentServiceImpl (
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
                 ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val comment = Comment(
-                app_user = request.user,
+                appUser = request.user,
                 text = request.text,
                 password = request.password
         )
@@ -52,7 +52,7 @@ class CommentServiceImpl (
             request: UpdateCommentRequest): CommentResponse {
         val comment = commentRepository.findByIdOrNull(commentId)
                 ?: throw ModelNotFoundException("Comment", commentId)
-        comment.app_user = request.user
+        comment.appUser = request.user
         comment.text = request.text
 
         return commentRepository.save(comment).toResponse()

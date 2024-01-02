@@ -13,5 +13,5 @@ interface TodoCardService {
 
     fun updateTodoCard(todoCardId: Long, request: UpdateTodoCardRequest): TodoCardResponse
 
-    fun deleteTodoCard(todoCardId: Long, password: String,)
+    fun deleteTodoCard(todoCardId: Long, password: String)
 }

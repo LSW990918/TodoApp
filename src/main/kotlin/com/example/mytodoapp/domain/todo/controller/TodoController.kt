@@ -13,61 +13,63 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/todo-cards/{todoCardId}/todos")
 @RestController
 class TodoController(
-        private val todoService: TodoService
+    private val todoService: TodoService
 ) {
 
     @PostMapping
     fun addTodo(@PathVariable todoCardId: Long, @RequestBody addTodoRequest: AddTodoRequest)
-    : ResponseEntity<TodoResponse>{
+            : ResponseEntity<TodoResponse> {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(todoService.addTodo(todoCardId, addTodoRequest))
+            .status(HttpStatus.CREATED)
+            .body(todoService.addTodo(todoCardId, addTodoRequest))
     }
 
     @GetMapping
-    fun getTodoList(@PathVariable todoCardId: Long): ResponseEntity<List<TodoResponse>>{
+    fun getTodoList(@PathVariable todoCardId: Long): ResponseEntity<List<TodoResponse>> {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoService.getAllTodoList(todoCardId))
+            .status(HttpStatus.OK)
+            .body(todoService.getAllTodoList(todoCardId))
     }
 
     @GetMapping("/{todoId}")
-    fun getTodo(@PathVariable todoCardId: Long,
-                @PathVariable todoId: Long): ResponseEntity<TodoResponse> {
+    fun getTodo(
+        @PathVariable todoCardId: Long,
+        @PathVariable todoId: Long
+    ): ResponseEntity<TodoResponse> {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoService.getTodoById(todoCardId, todoId))
+            .status(HttpStatus.OK)
+            .body(todoService.getTodoById(todoCardId, todoId))
     }
 
     @PutMapping("/{todoId}")
     fun updateTodo(
-            @PathVariable todoCardId: Long,
-            @PathVariable todoId: Long,
-            @RequestBody updateTodoRequest: UpdateTodoRequest
+        @PathVariable todoCardId: Long,
+        @PathVariable todoId: Long,
+        @RequestBody updateTodoRequest: UpdateTodoRequest
     ): ResponseEntity<TodoResponse> {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoService.updateTodo(todoCardId, todoId, updateTodoRequest))
+            .status(HttpStatus.OK)
+            .body(todoService.updateTodo(todoCardId, todoId, updateTodoRequest))
     }
 
     @DeleteMapping("/{todoId}")
     fun deleteTodo(
-            @PathVariable todoCardId: Long,
-            @PathVariable todoId: Long
-    ): ResponseEntity<Unit>{
+        @PathVariable todoCardId: Long,
+        @PathVariable todoId: Long
+    ): ResponseEntity<Unit> {
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .body(todoService.deleteTodo(todoCardId, todoId))
+            .status(HttpStatus.NO_CONTENT)
+            .body(todoService.deleteTodo(todoCardId, todoId))
     }
 
     @PutMapping("/{todoId}/status")
     fun updateTodoStatus(
-            @PathVariable todoCardId: Long,
-            @PathVariable todoId: Long,
+        @PathVariable todoCardId: Long,
+        @PathVariable todoId: Long,
     ): ResponseEntity<TodoResponse> {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoService.updateTodoStatus(todoCardId, todoId))
+            .status(HttpStatus.OK)
+            .body(todoService.updateTodoStatus(todoCardId, todoId))
     }
 
 }
