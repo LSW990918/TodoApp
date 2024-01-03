@@ -5,21 +5,24 @@ import com.example.mytodoapp.domain.todo.model.Todo
 import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
 import jakarta.persistence.*
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-var now = LocalDateTime.now()
+val current = LocalDateTime.now()
+val formatter = DateTimeFormatter.ofPattern("yyyy MM dd")
+
 
 @Entity
 @Table(name = "todocard")
 class TodoCard(
 
     @Column(name = "app_user", nullable = false)
-    var app_user: String,
+    var appUser: String,
 
     @Column(name = "password", nullable = false)
     var password: String,
 
     @Column(name = "date", nullable = false)
-    val date: String = "${now.year}-${now.month}-${now.dayOfMonth}",
+    val date: String = current.format(formatter),
 
     @OneToMany(
         cascade = [CascadeType.ALL],
@@ -63,7 +66,7 @@ class TodoCard(
 fun TodoCard.toResponse(): TodoCardResponse {
     return TodoCardResponse(
         id = id!!,
-        user = app_user,
-        date = date
+        user = appUser,
+        date = date,
     )
 }

@@ -23,14 +23,14 @@ class TodoCardController(
     }
 
     @GetMapping()
-    fun getTodoCardList(): ResponseEntity<List<TodoCardResponse>> {
+    fun getTodoCardList(order:String?, name: String?): ResponseEntity<List<TodoCardResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoCardService.getAllTodoCardList())
+            .body(todoCardService.getAllTodoCardList(order, name))
     }
 
     @GetMapping("/{todoCardId}")
-    fun getTodoCard(@PathVariable todoCardId: Long): ResponseEntity<TodoCardResponse> {
+    fun getTodoCardById(@PathVariable todoCardId: Long): ResponseEntity<TodoCardResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoCardService.getTodoCardById(todoCardId))

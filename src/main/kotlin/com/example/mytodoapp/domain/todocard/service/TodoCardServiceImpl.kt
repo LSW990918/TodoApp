@@ -16,8 +16,17 @@ import org.springframework.stereotype.Service
 class TodoCardServiceImpl(
     private val todoCardRepository: TodoCardRepository
 ) : TodoCardService {
-    override fun getAllTodoCardList(): List<TodoCardResponse> {
-        return todoCardRepository.findAll().map { it.toResponse() }
+    override fun getAllTodoCardList(order: String?, name: String?): List<TodoCardResponse> {
+        val todoCardList = todoCardRepository.findAll().map { it.toResponse() }
+        if (order == null || order == "ASC") {
+            todoCardList.sortedBy { it.date }
+        } else if (order == "DESC") {
+            todoCardList.sortedByDescending { it.date }
+        }
+        if (name != null) {
+            return todoCardList.filter { it.user == name }
+        }
+        return todoCardList
     }
 
     override fun getTodoCardById(todoCardId: Long): TodoCardResponse {
@@ -30,7 +39,7 @@ class TodoCardServiceImpl(
     override fun createTodoCard(request: CreateTodoCardRequest): TodoCardResponse {
         return todoCardRepository.save(
             TodoCard(
-                app_user = request.user,
+                appUser = request.user,
                 password = request.password
             )
         ).toResponse()
@@ -42,7 +51,7 @@ class TodoCardServiceImpl(
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val (user) = request
 
-        todoCard.app_user = user
+        todoCard.appUser = user
 
         return todoCardRepository.save(todoCard).toResponse()
     }
