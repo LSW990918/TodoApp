@@ -16,9 +16,15 @@ class GlobalExceptionHandler {
                 .body(ErrorResponse(message = e.message))
     }
     @ExceptionHandler(IncorrectPasswordException::class)
-    fun handleModelNotFoundException(e: IncorrectPasswordException): ResponseEntity<ErrorResponse> {
+    fun handleIncorrectPasswordException(e: IncorrectPasswordException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(ErrorResponse(message = e.message))
+    }
+    @ExceptionHandler(IncorrectPasswordException::class)
+    fun handleIncorrectNumberOfCharactersException(e: IncorrectNumberOfCharactersException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ErrorResponse(message = e.message))
     }
 }

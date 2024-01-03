@@ -11,48 +11,48 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/todo-cards")
 @RestController
 class TodoCardController(
-        private val todoCardService: TodoCardService
+    private val todoCardService: TodoCardService
 ) {
 
     @PostMapping
     fun createTodoCard(@RequestBody createTodoCardRequest: CreateTodoCardRequest)
-    : ResponseEntity<TodoCardResponse>{
+            : ResponseEntity<TodoCardResponse> {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(todoCardService.createTodoCard(createTodoCardRequest))
+            .status(HttpStatus.CREATED)
+            .body(todoCardService.createTodoCard(createTodoCardRequest))
     }
 
     @GetMapping()
-    fun getTodoCardList(): ResponseEntity<List<TodoCardResponse>>{
+    fun getTodoCardList(order:String?, name: String?): ResponseEntity<List<TodoCardResponse>> {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoCardService.getAllTodoCardList())
+            .status(HttpStatus.OK)
+            .body(todoCardService.getAllTodoCardList(order, name))
     }
 
     @GetMapping("/{todoCardId}")
-    fun getTodoCard(@PathVariable todoCardId: Long): ResponseEntity<TodoCardResponse> {
+    fun getTodoCardById(@PathVariable todoCardId: Long): ResponseEntity<TodoCardResponse> {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoCardService.getTodoCardById(todoCardId))
+            .status(HttpStatus.OK)
+            .body(todoCardService.getTodoCardById(todoCardId))
     }
 
     @PutMapping("/{todoCardId}")
     fun updateTodoCard(
-            @PathVariable todoCardId: Long,
-            @RequestBody updateTodoCardRequest: UpdateTodoCardRequest
+        @PathVariable todoCardId: Long,
+        @RequestBody updateTodoCardRequest: UpdateTodoCardRequest
     ): ResponseEntity<TodoCardResponse> {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(todoCardService.updateTodoCard(todoCardId, updateTodoCardRequest))
+            .status(HttpStatus.OK)
+            .body(todoCardService.updateTodoCard(todoCardId, updateTodoCardRequest))
     }
 
     @DeleteMapping("/{todoCardId}")
     fun deleteTodoCard(
-            @PathVariable todoCardId: Long,
-            password: String,
-            ): ResponseEntity<Unit>{
+        @PathVariable todoCardId: Long,
+        password: String,
+    ): ResponseEntity<Unit> {
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .body(todoCardService.deleteTodoCard(todoCardId, password))
+            .status(HttpStatus.NO_CONTENT)
+            .body(todoCardService.deleteTodoCard(todoCardId, password))
     }
 }

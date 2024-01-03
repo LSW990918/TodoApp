@@ -5,7 +5,7 @@ import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
 import com.example.mytodoapp.domain.todocard.dto.UpdateTodoCardRequest
 
 interface TodoCardService {
-    fun getAllTodoCardList(): List<TodoCardResponse>
+    fun getAllTodoCardList(order:String?, name: String?): List<TodoCardResponse>
 
     fun getTodoCardById(todoCardId: Long): TodoCardResponse
 
@@ -13,5 +13,5 @@ interface TodoCardService {
 
     fun updateTodoCard(todoCardId: Long, request: UpdateTodoCardRequest): TodoCardResponse
 
-    fun deleteTodoCard(todoCardId: Long, password: String,)
+    fun deleteTodoCard(todoCardId: Long, password: String)
 }
