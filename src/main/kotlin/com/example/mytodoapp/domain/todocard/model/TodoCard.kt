@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 val current = LocalDateTime.now()
-val formatter = DateTimeFormatter.ofPattern("yyyy MM dd")
+val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
 
 
 @Entity

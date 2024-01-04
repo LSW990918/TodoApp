@@ -19,9 +19,9 @@ class TodoCardServiceImpl(
     override fun getAllTodoCardList(order: String?, name: String?): List<TodoCardResponse> {
         val todoCardList = todoCardRepository.findAll().map { it.toResponse() }
         if (order == null || order == "ASC") {
-            todoCardList.sortedBy { it.date }
+            todoCardList.sortedBy { it.date.toLong() }
         } else if (order == "DESC") {
-            todoCardList.sortedByDescending { it.date }
+            todoCardList.sortedByDescending { it.date.toLong() }
         }
         if (name != null) {
             return todoCardList.filter { it.user == name }

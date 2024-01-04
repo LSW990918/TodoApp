@@ -1,17 +1,20 @@
 package com.example.mytodoapp
 
 
-import com.example.mytodoapp.domain.todocard.model.toResponse
-import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
+
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @SpringBootTest
-class MyTodoAppApplicationTests(
-) {
+class MyTodoAppApplicationTests() {
+    val current = LocalDateTime.now()
+    val formatter = DateTimeFormatter.ofPattern("yyyy MM dd")
+    val date: String = current.format(formatter)
 
     @Test
-    fun getAllTodoCardList() {
-    }
+    fun main() {
 
+    }
 }
