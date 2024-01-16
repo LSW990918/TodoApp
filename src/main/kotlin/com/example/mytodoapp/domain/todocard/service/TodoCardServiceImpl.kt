@@ -41,7 +41,7 @@ class TodoCardServiceImpl(
             ?: throw ModelNotFoundException("User", 1) //추후 수정필요
         return todoCardRepository.save(
             TodoCard(
-                name = request.name,
+                name = user.name,
                 password = request.password,
                 user = user
             )

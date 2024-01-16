@@ -1,8 +1,7 @@
 package com.example.mytodoapp.domain.user.dto
 
-data class SignUpRequest(
+data class LoginRequest(
     val email: String,
     val password: String,
-    val name: String,
-    val role: String
+    val role: String,
 )

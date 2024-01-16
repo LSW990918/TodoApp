@@ -23,21 +23,19 @@ class TodoCard(
     val date: String = current.format(formatter),
 
     @OneToMany(
-        //mappedBy = "tococard",
+        mappedBy = "todocard",
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
         fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "todocard_id")
     var todoList: MutableList<Todo> = mutableListOf(),
 
     @OneToMany(
-        //mappedBy = "tococard",
+        mappedBy = "todocard",
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
         fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "todocard_id")
     var comments: MutableList<Comment> = mutableListOf(),
 
     @ManyToOne()
@@ -45,7 +43,7 @@ class TodoCard(
     var user: User,
 
     @Column(name = "name", nullable = false)
-    var name: String = user.name,
+    var name: String,
 
 
     ) {

@@ -1,6 +1,7 @@
 package com.example.mytodoapp.domain.exception
 
 import com.example.mytodoapp.domain.exception.dto.ErrorResponse
+import com.example.mytodoapp.domain.user.exception.InvalidCredentialException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -23,6 +24,13 @@ class GlobalExceptionHandler {
     }
     @ExceptionHandler(IncorrectPasswordException::class)
     fun handleIncorrectNumberOfCharactersException(e: IncorrectNumberOfCharactersException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ErrorResponse(message = e.message))
+    }
+
+    @ExceptionHandler(InvalidCredentialException::class)
+    fun handleInvalidCredentialException(e: InvalidCredentialException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .status(HttpStatus.UNAUTHORIZED)
             .body(ErrorResponse(message = e.message))

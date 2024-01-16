@@ -1,10 +1,10 @@
 package com.example.mytodoapp.domain.user.service
 
-import com.example.mytodoapp.domain.user.dto.SignUpRequest
-import com.example.mytodoapp.domain.user.dto.UpdateUserProfileRequest
-import com.example.mytodoapp.domain.user.dto.UserResponse
+import com.example.mytodoapp.domain.user.dto.*
 
 interface UserService {
+
+    fun login(request: LoginRequest): LoginResponse
 
     fun signUp(request: SignUpRequest): UserResponse
 

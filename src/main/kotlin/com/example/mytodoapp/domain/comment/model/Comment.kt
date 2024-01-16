@@ -19,10 +19,10 @@ class Comment(
 
     @ManyToOne()
     @JoinColumn(name = "todocard_id", nullable = false)
-    var todoCard: TodoCard,
+    var todocard: TodoCard,
 
     @Column(name = "name", nullable = false)
-    var name: String = user.name,
+    var name: String,
 
     ) {
     @Id

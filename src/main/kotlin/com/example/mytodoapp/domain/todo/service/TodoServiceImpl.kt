@@ -9,6 +9,7 @@ import com.example.mytodoapp.domain.todo.model.TodoStatus
 import com.example.mytodoapp.domain.todo.model.toResponse
 import com.example.mytodoapp.domain.todo.repository.TodoRepository
 import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
+import com.example.mytodoapp.domain.user.repository.UserRepository
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Service
 @Service
 class TodoServiceImpl(
     private val todoRepository: TodoRepository,
-    private val todoCardRepository: TodoCardRepository
+    private val todoCardRepository: TodoCardRepository,
+    private val userRepository: UserRepository
 ) : TodoService {
     override fun getAllTodoList(todoCardId: Long): List<TodoResponse> {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
@@ -34,10 +36,13 @@ class TodoServiceImpl(
     override fun addTodo(todoCardId: Long, request: AddTodoRequest): TodoResponse {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
+        val user = userRepository.findByIdOrNull(1)
+            ?: throw ModelNotFoundException("User", 1) //추후 수정
         val todo = Todo(
             todoTitle = request.todoTitle,
             todoDescription = request.todoDescription,
-            todoCard = todoCard
+            todocard = todoCard,
+            user = user
         )
         todoCard.addTodo(todo)
         todoCardRepository.save(todoCard)
