@@ -11,11 +11,11 @@ class SwaggerConfig {
 
     @Bean
     fun openAPI(): OpenAPI = OpenAPI()
-            .components(Components())
-            .info(
-                    Info()
-                            .title("Todo API")
-                            .description("Todo API schema")
-                            .version("1.0.0")
-            )
+        .components(Components())
+        .info(
+            Info()
+                .title("Todo API")
+                .description("Todo API schema")
+                .version("1.0.0")
+        )
 }
