@@ -1,8 +1,9 @@
 package com.example.mytodoapp.domain.todo.model
 
 import com.example.mytodoapp.domain.todo.dto.TodoResponse
+import com.example.mytodoapp.domain.todocard.model.TodoCard
+import com.example.mytodoapp.domain.user.model.User
 import jakarta.persistence.*
-import kotlin.math.max
 
 @Entity
 @Table(name = "todo")
@@ -18,17 +19,13 @@ class Todo(
     @Column(name = "status", nullable = false)
     var status: TodoStatus = TodoStatus.INCOMPLETE,
 
-    @Column(name = "max_title", nullable = false)
-    val maxTitle: Int = 200,
+    @ManyToOne()
+    @JoinColumn(name = "user_id", nullable = false)
+    var todoCard: TodoCard,
 
-    @Column(name = "max_description", nullable = false)
-    val maxDescription: Int = 1000,
-
-    @Column(name = "num_title", nullable = false)
-    var numTitle: Int = todoTitle.count(),
-
-    @Column(name = "num_description", nullable = false)
-    var numDescription: Int = todoDescription.count(),
+    //@ManyToOne()
+    //@JoinColumn(name = "user_id", nullable = false)
+    //var user: User,
 
     ) {
     @Id
@@ -42,18 +39,6 @@ class Todo(
     fun incomplete() {
         status = TodoStatus.INCOMPLETE
     }
-
-    fun countTitle(): Boolean {
-        if (numTitle in 1..maxTitle) {
-            return false
-        } else return true
-    }
-
-    fun countDescription(): Boolean{
-        if (numDescription in 1..maxDescription) {
-            return false
-        } else return true
-    }
 }
 
 fun Todo.toResponse(): TodoResponse {
@@ -62,9 +47,6 @@ fun Todo.toResponse(): TodoResponse {
         todoTitle = todoTitle,
         todoDescription = todoDescription,
         status = status.name,
-        maxTitle = maxTitle,
-        numTitle = numTitle,
-        maxDescription = maxDescription,
-        numDescription = numDescription
+        //user = user
     )
 }

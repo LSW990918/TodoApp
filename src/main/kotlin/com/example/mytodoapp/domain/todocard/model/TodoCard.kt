@@ -3,6 +3,7 @@ package com.example.mytodoapp.domain.todocard.model
 import com.example.mytodoapp.domain.comment.model.Comment
 import com.example.mytodoapp.domain.todo.model.Todo
 import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
+import com.example.mytodoapp.domain.user.model.User
 import jakarta.persistence.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -15,9 +16,6 @@ val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
 @Table(name = "todocard")
 class TodoCard(
 
-    @Column(name = "app_user", nullable = false)
-    var appUser: String,
-
     @Column(name = "password", nullable = false)
     var password: String,
 
@@ -25,6 +23,7 @@ class TodoCard(
     val date: String = current.format(formatter),
 
     @OneToMany(
+        //mappedBy = "tococard",
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
         fetch = FetchType.LAZY
@@ -33,15 +32,24 @@ class TodoCard(
     var todoList: MutableList<Todo> = mutableListOf(),
 
     @OneToMany(
+        //mappedBy = "tococard",
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
         fetch = FetchType.LAZY
     )
     @JoinColumn(name = "todocard_id")
-    var comments: MutableList<Comment> = mutableListOf()
+    var comments: MutableList<Comment> = mutableListOf(),
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: User,
+
+    @Column(name = "name", nullable = false)
+    var name: String = user.name,
 
 
-) {
+    ) {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
@@ -66,7 +74,7 @@ class TodoCard(
 fun TodoCard.toResponse(): TodoCardResponse {
     return TodoCardResponse(
         id = id!!,
-        user = appUser,
+        name = name,
         date = date,
     )
 }
