@@ -14,5 +14,5 @@ interface CommentService {
 
     fun updateComment(todoCardId: Long, commentId: Long, request: UpdateCommentRequest): CommentResponse
 
-    fun deleteComment(todoCardId: Long, commentId: Long, password: String)
+    fun deleteComment(todoCardId: Long, commentId: Long)
 }

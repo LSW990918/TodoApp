@@ -62,6 +62,6 @@ class CommentController(
     ): ResponseEntity<Unit> {
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
-            .body(commentService.deleteComment(todoCardId, commentId, password))
+            .body(commentService.deleteComment(todoCardId, commentId))
     }
 }

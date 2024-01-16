@@ -2,7 +2,6 @@ package com.example.mytodoapp.domain.todocard.controller
 
 import com.example.mytodoapp.domain.todocard.dto.CreateTodoCardRequest
 import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
-import com.example.mytodoapp.domain.todocard.dto.UpdateTodoCardRequest
 import com.example.mytodoapp.domain.todocard.service.TodoCardService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -23,10 +22,10 @@ class TodoCardController(
     }
 
     @GetMapping()
-    fun getTodoCardList(order:String?, name: String?): ResponseEntity<List<TodoCardResponse>> {
+    fun getTodoCardList(order:String?): ResponseEntity<List<TodoCardResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoCardService.getAllTodoCardList(order, name))
+            .body(todoCardService.getAllTodoCardList(order))
     }
 
     @GetMapping("/{todoCardId}")
@@ -34,16 +33,6 @@ class TodoCardController(
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoCardService.getTodoCardById(todoCardId))
-    }
-
-    @PutMapping("/{todoCardId}")
-    fun updateTodoCard(
-        @PathVariable todoCardId: Long,
-        @RequestBody updateTodoCardRequest: UpdateTodoCardRequest
-    ): ResponseEntity<TodoCardResponse> {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(todoCardService.updateTodoCard(todoCardId, updateTodoCardRequest))
     }
 
     @DeleteMapping("/{todoCardId}")

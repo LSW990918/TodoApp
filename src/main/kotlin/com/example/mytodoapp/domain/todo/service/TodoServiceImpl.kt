@@ -1,6 +1,5 @@
 package com.example.mytodoapp.domain.todo.service
 
-import com.example.mytodoapp.domain.exception.IncorrectNumberOfCharactersException
 import com.example.mytodoapp.domain.exception.ModelNotFoundException
 import com.example.mytodoapp.domain.todo.dto.AddTodoRequest
 import com.example.mytodoapp.domain.todo.dto.TodoResponse
@@ -37,14 +36,9 @@ class TodoServiceImpl(
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val todo = Todo(
             todoTitle = request.todoTitle,
-            todoDescription = request.todoDescription
+            todoDescription = request.todoDescription,
+            todoCard = todoCard
         )
-        if (todo.countTitle()) {
-            throw IncorrectNumberOfCharactersException(1, todo.maxTitle)
-        }
-        if (todo.countDescription()) {
-            throw IncorrectNumberOfCharactersException(1, todo.maxDescription)
-        }
         todoCard.addTodo(todo)
         todoCardRepository.save(todoCard)
         return todo.toResponse()
@@ -63,13 +57,6 @@ class TodoServiceImpl(
         val (todoTitle, todoDescription) = request
         todo.todoTitle = todoTitle
         todo.todoDescription = todoDescription
-
-        if (todo.countTitle()) {
-            throw IncorrectNumberOfCharactersException(1, todo.maxTitle)
-        }
-        if (todo.countDescription()) {
-            throw IncorrectNumberOfCharactersException(1, todo.maxDescription)
-        }
         return todoRepository.save(todo).toResponse()
     }
 

@@ -1,4 +1,4 @@
-package com.example.courseregistration.infra.aop
+package com.example.mytodoapp.infra.aop
 
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
@@ -14,7 +14,7 @@ class StopWatchAspect {
     private val logger = LoggerFactory.getLogger("Execution Time Logger")
 
 
-    @Around("@annotation(com.example.courseregistration.infra.aop.StopWatch)")
+    @Around("@annotation(com.example.mytodoapp.infra.aop.StopWatch)")
     fun run(joinPoint: ProceedingJoinPoint) {
         val stopWatch = StopWatch()
 

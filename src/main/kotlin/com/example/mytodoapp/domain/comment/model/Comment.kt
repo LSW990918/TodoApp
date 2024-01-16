@@ -1,6 +1,8 @@
 package com.example.mytodoapp.domain.comment.model
 
 import com.example.mytodoapp.domain.comment.dto.CommentResponse
+import com.example.mytodoapp.domain.todocard.model.TodoCard
+import com.example.mytodoapp.domain.user.model.User
 import jakarta.persistence.*
 
 
@@ -8,15 +10,19 @@ import jakarta.persistence.*
 @Table(name = "comment")
 class Comment(
 
-    @Column(name = "app_user", nullable = false)
-    var appUser: String,
-
     @Column(name = "text", nullable = false)
     var text: String,
 
-    @Column(name = "password", nullable = false)
-    var password: String,
+    @ManyToOne()
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: User,
 
+    @ManyToOne()
+    @JoinColumn(name = "todocard_id", nullable = false)
+    var todoCard: TodoCard,
+
+    @Column(name = "name", nullable = false)
+    var name: String = user.name,
 
     ) {
     @Id
@@ -28,7 +34,7 @@ class Comment(
 fun Comment.toResponse(): CommentResponse {
     return CommentResponse(
         id = id!!,
-        user = appUser,
+        name = name,
         text = text
     )
 }

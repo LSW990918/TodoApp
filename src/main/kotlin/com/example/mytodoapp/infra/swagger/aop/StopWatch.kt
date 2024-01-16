@@ -1,4 +1,4 @@
-package com.example.courseregistration.infra.aop
+package com.example.mytodoapp.infra.aop
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
