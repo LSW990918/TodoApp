@@ -6,7 +6,6 @@ import com.example.mytodoapp.domain.comment.dto.UpdateCommentRequest
 import com.example.mytodoapp.domain.comment.model.Comment
 import com.example.mytodoapp.domain.comment.model.toResponse
 import com.example.mytodoapp.domain.comment.repository.CommentRepository
-import com.example.mytodoapp.domain.exception.IncorrectPasswordException
 import com.example.mytodoapp.domain.exception.ModelNotFoundException
 import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
 import com.example.mytodoapp.domain.user.repository.UserRepository
@@ -31,7 +30,7 @@ class CommentServiceImpl(
             name = user.name,
             text = request.text,
             user = user,
-            todoCard = todoCard
+            todocard = todoCard
             )
         todoCard.addComment(comment)
         todoCardRepository.save(todoCard)
@@ -69,7 +68,8 @@ class CommentServiceImpl(
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val comment = commentRepository.findByIdOrNull(commentId)
             ?: throw ModelNotFoundException("Comment", commentId)
-        commentRepository.delete(comment)
+        todoCard.removeComment(comment)
+        todoCardRepository.save(todoCard)
 
     }
 }

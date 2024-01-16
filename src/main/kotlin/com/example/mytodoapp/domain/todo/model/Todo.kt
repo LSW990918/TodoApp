@@ -20,12 +20,12 @@ class Todo(
     var status: TodoStatus = TodoStatus.INCOMPLETE,
 
     @ManyToOne()
-    @JoinColumn(name = "user_id", nullable = false)
-    var todoCard: TodoCard,
+    @JoinColumn(name = "todocard_id", nullable = false)
+    var todocard: TodoCard,
 
-    //@ManyToOne()
-    //@JoinColumn(name = "user_id", nullable = false)
-    //var user: User,
+    @ManyToOne()
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: User,
 
     ) {
     @Id

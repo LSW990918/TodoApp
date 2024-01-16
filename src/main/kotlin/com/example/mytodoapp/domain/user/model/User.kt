@@ -24,14 +24,14 @@ class User(
     val role: UserRole,
 
     @OneToMany(
-        //mappedBy = "app_user",
+        mappedBy = "user",
         cascade = [CascadeType.ALL],
         orphanRemoval = true
     )
-    val todoCard: MutableList<TodoCard> = mutableListOf(),
+    val todocard: MutableList<TodoCard> = mutableListOf(),
 
     @OneToMany(
-        //mappedBy = "app_user",
+        mappedBy = "user",
         cascade = [CascadeType.ALL],
         orphanRemoval = true
     )
