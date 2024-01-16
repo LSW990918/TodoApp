@@ -86,17 +86,16 @@ class TodoServiceImpl(
     override fun updateTodoStatus(todoCardId: Long, todoId: Long): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId)
             ?: throw ModelNotFoundException("Todo", todoId)
-        while (true) {
-            if (todo.status == TodoStatus.INCOMPLETE) {
-                todo.complete()
-                break
-            }
-            if (todo.status == TodoStatus.COMPLETE) {
-                todo.incomplete()
-                break
-            }
+
+        if (todo.status == TodoStatus.INCOMPLETE) {
+            todo.complete()
+            return todoRepository.save(todo).toResponse()
         }
-        return todoRepository.save(todo).toResponse()
+        if (todo.status == TodoStatus.COMPLETE) {
+            todo.incomplete()
+            return todoRepository.save(todo).toResponse()
+        }
+        return todo.toResponse()
     }
 
 }

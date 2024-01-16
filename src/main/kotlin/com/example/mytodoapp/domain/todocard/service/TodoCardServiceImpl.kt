@@ -1,5 +1,6 @@
 package com.example.mytodoapp.domain.todocard.service
 
+import com.example.courseregistration.infra.aop.StopWatch
 import com.example.mytodoapp.domain.exception.IncorrectPasswordException
 import com.example.mytodoapp.domain.exception.ModelNotFoundException
 import com.example.mytodoapp.domain.todocard.dto.CreateTodoCardRequest
@@ -29,6 +30,7 @@ class TodoCardServiceImpl(
         return todoCardList
     }
 
+    @StopWatch
     override fun getTodoCardById(todoCardId: Long): TodoCardResponse {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
