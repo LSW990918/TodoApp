@@ -1,14 +1,13 @@
 package com.example.mytodoapp.domain.todocard.service
 
-import com.example.mytodoapp.infra.aop.StopWatch
-import com.example.mytodoapp.domain.exception.IncorrectPasswordException
 import com.example.mytodoapp.domain.exception.ModelNotFoundException
-import com.example.mytodoapp.domain.todocard.dto.CreateTodoCardRequest
 import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
 import com.example.mytodoapp.domain.todocard.model.TodoCard
 import com.example.mytodoapp.domain.todocard.model.toResponse
 import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
+import com.example.mytodoapp.domain.user.exception.InvalidCredentialException
 import com.example.mytodoapp.domain.user.repository.UserRepository
+import com.example.mytodoapp.infra.aop.StopWatch
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -36,28 +35,23 @@ class TodoCardServiceImpl(
     }
 
     @Transactional
-    override fun createTodoCard(request: CreateTodoCardRequest): TodoCardResponse {
-        val user = userRepository.findByIdOrNull(1)
-            ?: throw ModelNotFoundException("User", 1) //추후 수정필요
+    override fun createTodoCard(userId: Long): TodoCardResponse {
+        val user = userRepository.findByIdOrNull(userId)
+            ?: throw ModelNotFoundException("User", userId)
         return todoCardRepository.save(
             TodoCard(
                 name = user.name,
-                password = request.password,
-                user = user
+                user = user,
             )
         ).toResponse()
     }
 
     @Transactional
-    override fun deleteTodoCard(todoCardId: Long, password: String) {
+    override fun deleteTodoCard(userId: Long, todoCardId: Long) {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
-        val masterPw = "1324"
-        if (password == masterPw || password == todoCard.password) {
+        if (todoCard.user.id == userId) {
             todoCardRepository.delete(todoCard)
-        } else {
-            throw IncorrectPasswordException(password, todoCardId)
-        }
-
+        } else throw InvalidCredentialException()
     }
 }

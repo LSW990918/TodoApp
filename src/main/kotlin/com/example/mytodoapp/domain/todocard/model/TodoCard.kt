@@ -16,9 +16,6 @@ val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
 @Table(name = "todocard")
 class TodoCard(
 
-    @Column(name = "password", nullable = false)
-    var password: String,
-
     @Column(name = "date", nullable = false)
     val date: String = current.format(formatter),
 
