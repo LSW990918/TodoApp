@@ -21,7 +21,8 @@ class TodoController(
     fun addTodo(
         @AuthenticationPrincipal user: UserPrincipal,
         @PathVariable todoCardId: Long,
-        @RequestBody addTodoRequest: AddTodoRequest)
+        @RequestBody addTodoRequest: AddTodoRequest
+    )
             : ResponseEntity<TodoResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)

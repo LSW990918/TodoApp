@@ -51,7 +51,7 @@ class TodoCardServiceImpl(
     }
 }
 
-fun checkCondition(inputId: Long, existingId: Long){
+fun checkCondition(inputId: Long, existingId: Long) {
     if (inputId != existingId) throw MismatchException(inputId, existingId)
 }
 

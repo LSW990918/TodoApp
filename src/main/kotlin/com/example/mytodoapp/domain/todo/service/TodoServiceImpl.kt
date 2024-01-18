@@ -131,6 +131,5 @@ fun Todo.toResponse(): TodoResponse {
         todoTitle = todoTitle,
         todoDescription = todoDescription,
         status = status.name,
-        //user = user
     )
 }

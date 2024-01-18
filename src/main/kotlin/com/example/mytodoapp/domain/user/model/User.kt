@@ -3,7 +3,6 @@ package com.example.mytodoapp.domain.user.model
 
 import com.example.mytodoapp.domain.comment.model.Comment
 import com.example.mytodoapp.domain.todocard.model.TodoCard
-import com.example.mytodoapp.domain.user.dto.UserResponse
 import jakarta.persistence.*
 
 @Entity

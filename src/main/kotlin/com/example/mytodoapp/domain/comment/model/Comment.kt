@@ -1,6 +1,5 @@
 package com.example.mytodoapp.domain.comment.model
 
-import com.example.mytodoapp.domain.comment.dto.CommentResponse
 import com.example.mytodoapp.domain.todocard.model.TodoCard
 import com.example.mytodoapp.domain.user.model.User
 import jakarta.persistence.*

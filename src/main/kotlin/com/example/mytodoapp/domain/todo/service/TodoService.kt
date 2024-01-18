@@ -4,7 +4,6 @@ import com.example.mytodoapp.domain.todo.dto.AddTodoRequest
 import com.example.mytodoapp.domain.todo.dto.TodoResponse
 import com.example.mytodoapp.domain.todo.dto.UpdateTodoRequest
 
-
 interface TodoService {
     fun getAllTodoList(todoCardId: Long): List<TodoResponse>
 

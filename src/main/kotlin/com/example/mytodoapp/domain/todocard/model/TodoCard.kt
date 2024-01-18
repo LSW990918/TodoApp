@@ -2,7 +2,6 @@ package com.example.mytodoapp.domain.todocard.model
 
 import com.example.mytodoapp.domain.comment.model.Comment
 import com.example.mytodoapp.domain.todo.model.Todo
-import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
 import com.example.mytodoapp.domain.user.model.User
 import jakarta.persistence.*
 import java.time.LocalDateTime
