@@ -65,11 +65,3 @@ class TodoCard(
         todoList.remove(todo)
     }
 }
-
-fun TodoCard.toResponse(): TodoCardResponse {
-    return TodoCardResponse(
-        id = id!!,
-        name = name,
-        date = date,
-    )
-}

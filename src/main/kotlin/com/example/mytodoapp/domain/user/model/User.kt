@@ -42,12 +42,3 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 }
-
-fun User.toResponse(): UserResponse {
-    return UserResponse(
-        id = id!!,
-        name = name,
-        email = email,
-        role = role.name
-    )
-}

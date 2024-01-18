@@ -30,11 +30,3 @@ class Comment(
     var id: Long? = null
 
 }
-
-fun Comment.toResponse(): CommentResponse {
-    return CommentResponse(
-        id = id!!,
-        name = name,
-        text = text
-    )
-}

@@ -43,13 +43,3 @@ class Todo(
         status = TodoStatus.INCOMPLETE
     }
 }
-
-fun Todo.toResponse(): TodoResponse {
-    return TodoResponse(
-        id = id!!,
-        todoTitle = todoTitle,
-        todoDescription = todoDescription,
-        status = status.name,
-        //user = user
-    )
-}

@@ -1,11 +1,10 @@
 package com.example.mytodoapp.domain.user.service
 
+import com.example.mytodoapp.domain.exception.InvalidCredentialException
 import com.example.mytodoapp.domain.exception.ModelNotFoundException
 import com.example.mytodoapp.domain.user.dto.*
-import com.example.mytodoapp.domain.user.exception.InvalidCredentialException
 import com.example.mytodoapp.domain.user.model.User
 import com.example.mytodoapp.domain.user.model.UserRole
-import com.example.mytodoapp.domain.user.model.toResponse
 import com.example.mytodoapp.domain.user.repository.UserRepository
 import com.example.mytodoapp.infra.security.jwt.JwtPlugin
 import jakarta.transaction.Transactional
@@ -63,6 +62,13 @@ class UserServiceImpl(
 
         return userRepository.save(user).toResponse()
     }
+}
 
-
+fun User.toResponse(): UserResponse {
+    return UserResponse(
+        id = id!!,
+        name = name,
+        email = email,
+        role = role.name
+    )
 }
