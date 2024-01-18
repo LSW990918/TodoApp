@@ -48,7 +48,6 @@ class TodoCardController(
     fun deleteTodoCard(
         @AuthenticationPrincipal user: UserPrincipal,
         @PathVariable todoCardId: Long,
-        password: String,
     ): ResponseEntity<Unit> {
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
