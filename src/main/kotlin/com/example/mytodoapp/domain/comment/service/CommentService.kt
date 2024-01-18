@@ -6,13 +6,13 @@ import com.example.mytodoapp.domain.comment.dto.UpdateCommentRequest
 
 interface CommentService {
 
-    fun addComment(todoCardId: Long, request: AddCommentRequest): CommentResponse
+    fun addComment(userId: Long, todoCardId: Long, request: AddCommentRequest): CommentResponse
 
     fun getCommentList(todoCardId: Long): List<CommentResponse>
 
     fun getComment(todoCardId: Long, commentId: Long): CommentResponse
 
-    fun updateComment(todoCardId: Long, commentId: Long, request: UpdateCommentRequest): CommentResponse
+    fun updateComment(userId: Long, todoCardId: Long, commentId: Long, request: UpdateCommentRequest): CommentResponse
 
-    fun deleteComment(todoCardId: Long, commentId: Long)
+    fun deleteComment(userId: Long, todoCardId: Long, commentId: Long)
 }

@@ -1,4 +1,4 @@
-package com.example.mytodoapp.infra.swagger.security.jwt
+package com.example.mytodoapp.infra.security.jwt
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws

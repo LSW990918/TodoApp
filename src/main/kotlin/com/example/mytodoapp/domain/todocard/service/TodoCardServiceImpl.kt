@@ -1,14 +1,12 @@
 package com.example.mytodoapp.domain.todocard.service
 
-import com.example.mytodoapp.infra.aop.StopWatch
-import com.example.mytodoapp.domain.exception.IncorrectPasswordException
+import com.example.mytodoapp.domain.exception.MismatchException
 import com.example.mytodoapp.domain.exception.ModelNotFoundException
-import com.example.mytodoapp.domain.todocard.dto.CreateTodoCardRequest
 import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
 import com.example.mytodoapp.domain.todocard.model.TodoCard
-import com.example.mytodoapp.domain.todocard.model.toResponse
 import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
 import com.example.mytodoapp.domain.user.repository.UserRepository
+import com.example.mytodoapp.infra.aop.StopWatch
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -20,11 +18,8 @@ class TodoCardServiceImpl(
 ) : TodoCardService {
     override fun getAllTodoCardList(order: String?): List<TodoCardResponse> {
         val todoCardList = todoCardRepository.findAll().map { it.toResponse() }
-        if (order == null || order == "ASC") {
-            todoCardList.sortedBy { it.date.toLong() }
-        } else if (order == "DESC") {
-            todoCardList.sortedByDescending { it.date.toLong() }
-        }
+        if (order == null || order == "ASC") todoCardList.sortedBy { it.date.toLong() }
+        if (order == "DESC") todoCardList.sortedByDescending { it.date.toLong() }
         return todoCardList
     }
 
@@ -36,28 +31,34 @@ class TodoCardServiceImpl(
     }
 
     @Transactional
-    override fun createTodoCard(request: CreateTodoCardRequest): TodoCardResponse {
-        val user = userRepository.findByIdOrNull(1)
-            ?: throw ModelNotFoundException("User", 1) //추후 수정필요
+    override fun createTodoCard(userId: Long): TodoCardResponse {
+        val user = userRepository.findByIdOrNull(userId)
+            ?: throw ModelNotFoundException("User", userId)
         return todoCardRepository.save(
             TodoCard(
                 name = user.name,
-                password = request.password,
-                user = user
+                user = user,
             )
         ).toResponse()
     }
 
     @Transactional
-    override fun deleteTodoCard(todoCardId: Long, password: String) {
+    override fun deleteTodoCard(userId: Long, todoCardId: Long) {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
-        val masterPw = "1324"
-        if (password == masterPw || password == todoCard.password) {
-            todoCardRepository.delete(todoCard)
-        } else {
-            throw IncorrectPasswordException(password, todoCardId)
-        }
-
+        checkCondition(userId, todoCard.user.id!!)
+        todoCardRepository.delete(todoCard)
     }
+}
+
+fun checkCondition(inputId: Long, existingId: Long) {
+    if (inputId != existingId) throw MismatchException(inputId, existingId)
+}
+
+fun TodoCard.toResponse(): TodoCardResponse {
+    return TodoCardResponse(
+        id = id!!,
+        name = name,
+        date = date,
+    )
 }

@@ -6,9 +6,9 @@ import com.example.mytodoapp.domain.todo.dto.TodoResponse
 import com.example.mytodoapp.domain.todo.dto.UpdateTodoRequest
 import com.example.mytodoapp.domain.todo.model.Todo
 import com.example.mytodoapp.domain.todo.model.TodoStatus
-import com.example.mytodoapp.domain.todo.model.toResponse
 import com.example.mytodoapp.domain.todo.repository.TodoRepository
 import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
+import com.example.mytodoapp.domain.todocard.service.checkCondition
 import com.example.mytodoapp.domain.user.repository.UserRepository
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
@@ -33,11 +33,13 @@ class TodoServiceImpl(
     }
 
     @Transactional
-    override fun addTodo(todoCardId: Long, request: AddTodoRequest): TodoResponse {
+    override fun addTodo(userId: Long, todoCardId: Long, request: AddTodoRequest): TodoResponse {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
-        val user = userRepository.findByIdOrNull(1)
-            ?: throw ModelNotFoundException("User", 1) //추후 수정
+        val user = userRepository.findByIdOrNull(userId)
+            ?: throw ModelNotFoundException("User", userId)
+        //userId와 todoCard의 user.id 가 같은지 비교
+        checkCondition(userId, todoCard.user.id!!)
         val todo = Todo(
             todoTitle = request.todoTitle,
             todoDescription = request.todoDescription,
@@ -51,33 +53,62 @@ class TodoServiceImpl(
 
     @Transactional
     override fun updateTodo(
+        userId: Long,
         todoCardId: Long,
         todoId: Long,
         request: UpdateTodoRequest
     ): TodoResponse {
-
-        val todo = todoRepository.findByIdOrNull(todoId)
-            ?: throw ModelNotFoundException("Todo", todoId)
-
-        val (todoTitle, todoDescription) = request
-        todo.todoTitle = todoTitle
-        todo.todoDescription = todoDescription
-        return todoRepository.save(todo).toResponse()
-    }
-
-    @Transactional
-    override fun deleteTodo(todoCardId: Long, todoId: Long) {
+        val user = userRepository.findByIdOrNull(userId)
+            ?: throw ModelNotFoundException("User", userId)
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val todo = todoRepository.findByIdOrNull(todoId)
             ?: throw ModelNotFoundException("Todo", todoId)
+        //userId와 todo의 user.id 가 같은지 비교
+        checkCondition(user.id!!, todo.user.id!!)
+        //todoCardId와 todo의 todoCard.id가 같은지 비교
+        checkCondition(todoCard.id!!, todo.todocard.id!!)
+
+        val (todoTitle, todoDescription) = request
+        todo.todoTitle = todoTitle
+        todo.todoDescription = todoDescription
+        //업데이트시에는 세이브가 별도로 필요하지 않음
+        //todoRepository.save(todo)
+        return todo.toResponse()
+    }
+
+    @Transactional
+    override fun deleteTodo(userId: Long, todoCardId: Long, todoId: Long) {
+        val user = userRepository.findByIdOrNull(userId)
+            ?: throw ModelNotFoundException("User", userId)
+        val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
+            ?: throw ModelNotFoundException("TodoCard", todoCardId)
+        val todo = todoRepository.findByIdOrNull(todoId)
+            ?: throw ModelNotFoundException("Todo", todoId)
+        //userId와 todo의 user.id 가 같은지 비교
+        checkCondition(user.id!!, todo.user.id!!)
+        //todoCardId와 todo의 todoCard.id가 같은지 비교
+        checkCondition(todoCard.id!!, todo.todocard.id!!)
+
         todoCard.removeTodo(todo)
         todoCardRepository.save(todoCard)
     }
 
-    override fun updateTodoStatus(todoCardId: Long, todoId: Long): TodoResponse {
+    override fun updateTodoStatus(
+        userId: Long,
+        todoCardId: Long,
+        todoId: Long
+    ): TodoResponse {
+        val user = userRepository.findByIdOrNull(userId)
+            ?: throw ModelNotFoundException("User", userId)
+        val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
+            ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val todo = todoRepository.findByIdOrNull(todoId)
             ?: throw ModelNotFoundException("Todo", todoId)
+        //userId와 todo의 user.id 가 같은지 비교
+        checkCondition(user.id!!, todo.user.id!!)
+        //todoCardId와 todo의 todoCard.id가 같은지 비교
+        checkCondition(todoCard.id!!, todo.todocard.id!!)
 
         if (todo.status == TodoStatus.INCOMPLETE) {
             todo.complete()
@@ -90,4 +121,13 @@ class TodoServiceImpl(
         return todo.toResponse()
     }
 
+}
+
+fun Todo.toResponse(): TodoResponse {
+    return TodoResponse(
+        id = id!!,
+        todoTitle = todoTitle,
+        todoDescription = todoDescription,
+        status = status.name,
+    )
 }
