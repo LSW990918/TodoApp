@@ -12,19 +12,28 @@ class GlobalExceptionHandler {
     @ExceptionHandler(ModelNotFoundException::class)
     fun handleModelNotFoundException(e: ModelNotFoundException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(ErrorResponse(message = e.message))
+            .status(HttpStatus.NOT_FOUND)
+            .body(ErrorResponse(message = e.message))
     }
-    @ExceptionHandler(IncorrectPasswordException::class)
-    fun handleIncorrectPasswordException(e: IncorrectPasswordException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(ErrorResponse(message = e.message))
-    }
-    @ExceptionHandler(IncorrectPasswordException::class)
-    fun handleIncorrectNumberOfCharactersException(e: IncorrectNumberOfCharactersException): ResponseEntity<ErrorResponse> {
+
+    @ExceptionHandler(InvalidCredentialException::class)
+    fun handleInvalidCredentialException(e: InvalidCredentialException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .status(HttpStatus.UNAUTHORIZED)
+            .body(ErrorResponse(message = e.message))
+    }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(message = e.message))
+    }
+
+    @ExceptionHandler(MismatchException::class)
+    fun handleMismatchExceptionException(e: MismatchException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.PRECONDITION_FAILED)//알맞는 status인지 잘 모르겠음
             .body(ErrorResponse(message = e.message))
     }
 }
