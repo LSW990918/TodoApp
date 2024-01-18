@@ -1,4 +1,4 @@
-package com.example.mytodoapp.infra.swagger.security
+package com.example.mytodoapp.infra.security
 
 import com.example.mytodoapp.domain.exception.dto.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper

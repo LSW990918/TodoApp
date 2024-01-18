@@ -2,7 +2,7 @@ package com.example.mytodoapp.domain.todocard.controller
 
 import com.example.mytodoapp.domain.todocard.dto.TodoCardResponse
 import com.example.mytodoapp.domain.todocard.service.TodoCardService
-import com.example.mytodoapp.infra.swagger.security.UserPrincipal
+import com.example.mytodoapp.infra.security.UserPrincipal
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize

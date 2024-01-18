@@ -1,6 +1,6 @@
-package com.example.mytodoapp.infra.swagger.security.jwt
+package com.example.mytodoapp.infra.security.jwt
 
-import com.example.mytodoapp.infra.swagger.security.UserPrincipal
+import com.example.mytodoapp.infra.security.UserPrincipal
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

@@ -33,7 +33,7 @@ class TodoServiceImpl(
     }
 
     @Transactional
-    override fun addTodo(todoCardId: Long, request: AddTodoRequest): TodoResponse {
+    override fun addTodo(userId: Long, todoCardId: Long, request: AddTodoRequest): TodoResponse {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val user = userRepository.findByIdOrNull(1)
@@ -51,6 +51,7 @@ class TodoServiceImpl(
 
     @Transactional
     override fun updateTodo(
+        userId: Long,
         todoCardId: Long,
         todoId: Long,
         request: UpdateTodoRequest
@@ -66,7 +67,7 @@ class TodoServiceImpl(
     }
 
     @Transactional
-    override fun deleteTodo(todoCardId: Long, todoId: Long) {
+    override fun deleteTodo(userId: Long, todoCardId: Long, todoId: Long) {
         val todoCard = todoCardRepository.findByIdOrNull(todoCardId)
             ?: throw ModelNotFoundException("TodoCard", todoCardId)
         val todo = todoRepository.findByIdOrNull(todoId)
@@ -75,7 +76,11 @@ class TodoServiceImpl(
         todoCardRepository.save(todoCard)
     }
 
-    override fun updateTodoStatus(todoCardId: Long, todoId: Long): TodoResponse {
+    override fun updateTodoStatus(
+        userId: Long,
+        todoCardId: Long,
+        todoId: Long
+    ): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId)
             ?: throw ModelNotFoundException("Todo", todoId)
 

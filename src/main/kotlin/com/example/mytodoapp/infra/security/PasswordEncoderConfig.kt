@@ -1,4 +1,4 @@
-package com.example.mytodoapp.infra.swagger.security
+package com.example.mytodoapp.infra.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

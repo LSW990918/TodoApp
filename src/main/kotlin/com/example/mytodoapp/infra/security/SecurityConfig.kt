@@ -1,7 +1,7 @@
-package com.example.mytodoapp.infra.swagger.security
+package com.example.mytodoapp.infra.security
 
 
-import com.example.mytodoapp.infra.swagger.security.jwt.JwtAuthenticationFilter
+import com.example.mytodoapp.infra.security.jwt.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity

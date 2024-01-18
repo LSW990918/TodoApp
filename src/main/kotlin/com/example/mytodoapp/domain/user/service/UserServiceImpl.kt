@@ -7,7 +7,7 @@ import com.example.mytodoapp.domain.user.model.User
 import com.example.mytodoapp.domain.user.model.UserRole
 import com.example.mytodoapp.domain.user.model.toResponse
 import com.example.mytodoapp.domain.user.repository.UserRepository
-import com.example.mytodoapp.infra.swagger.security.jwt.JwtPlugin
+import com.example.mytodoapp.infra.security.jwt.JwtPlugin
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder

@@ -1,6 +1,6 @@
-package com.example.mytodoapp.infra.swagger.security.jwt
+package com.example.mytodoapp.infra.security.jwt
 
-import com.example.mytodoapp.infra.swagger.security.UserPrincipal
+import com.example.mytodoapp.infra.security.UserPrincipal
 import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 
