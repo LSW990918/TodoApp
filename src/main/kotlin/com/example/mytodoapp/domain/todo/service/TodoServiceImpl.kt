@@ -8,8 +8,6 @@ import com.example.mytodoapp.domain.todo.model.Todo
 import com.example.mytodoapp.domain.todo.model.TodoStatus
 import com.example.mytodoapp.domain.todo.repository.TodoRepository
 import com.example.mytodoapp.domain.todocard.repository.TodoCardRepository
-import com.example.mytodoapp.domain.exception.InvalidCredentialException
-import com.example.mytodoapp.domain.exception.MismatchException
 import com.example.mytodoapp.domain.todocard.service.checkCondition
 import com.example.mytodoapp.domain.user.repository.UserRepository
 import jakarta.transaction.Transactional
